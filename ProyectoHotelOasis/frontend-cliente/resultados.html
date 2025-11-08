@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Búsqueda - Hotel Oasis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="estilos.css">>
+</head>
+
+<body class="bg-page">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Hotel Oasis</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Booking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Instalaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sobre Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+                <div id="user-session" class="ms-lg-3">
+                    <a href="login-cliente.html" id="login-button" class="btn btn-primary">Login</a>
+
+                    <div class="dropdown d-none" id="profile-menu">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span id="profile-name-nav"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#" id="logout-button-nav">Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="text-center mb-5">
+            <h1>Habitaciones Disponibles</h1>
+            <p class="lead" id="search-summary">Resultados para tu búsqueda:</p>
+        </div>
+
+        <div class="p-4 bg-light rounded shadow-sm mb-5">
+            <form id="search-form" class="row g-3 align-items-end" method="GET" action="resultados.html">
+                <div class="col-md">
+                    <label for="fecha-inicio" class="form-label fw-bold">Check-in</label>
+                    <input type="date" class="form-control" id="fecha-inicio" name="inicio" required>
+                </div>
+                <div class="col-md">
+                    <label for="fecha-fin" class="form-label fw-bold">Check-out</label>
+                    <input type="date" class="form-control" id="fecha-fin" name="fin" required>
+                </div>
+                <div class="col-md">
+                    <label for="huespedes" class="form-label fw-bold">Huéspedes</label>
+                    <input type="number" class="form-control" id="huespedes" name="huespedes" value="2" min="1"
+                        required>
+                </div>
+                <div class="col-md d-grid">
+                    <button type="submit" class="btn btn-primary fw-bold">Modificar Búsqueda</button>
+                </div>
+            </form>
+        </div>
+
+       <div id="results-container">
+        </div>
+    </main>
+
+    <footer class="footer-section bg-light pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-logo">Hotel Oasis</h5>
+                    <p class="text-muted">Tu refugio ideal, donde el confort se encuentra con la elegancia.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h6>Compañía</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h6>Centro de Ayuda</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Guías de Renta</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h6>Contacto</h6>
+                    <p class="text-muted mb-1">Email: contacto@hoteloasis.com</p>
+                    <p class="text-muted">Teléfono: +52 555 123 4567</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="resultados.js"></script>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>

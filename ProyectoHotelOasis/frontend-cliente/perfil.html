@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Mi Cuenta - Hotel Oasis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // HEMOS RESTAURADO TU PALETA DE COLORES ORIGINAL
+                        primary: "#1E3A8A", // El azul elegante
+                        "background-light": "#F9FAFB",
+                        "card-light": "#FFFFFF",
+                        "text-light": "#111827",
+                        "subtle-light": "#6B7280",
+                        "accent-light": "#F59E0B", // El ámbar para acentos
+                    },
+                    fontFamily: { display: ["Poppins", "sans-serif"] },
+                    borderRadius: { DEFAULT: "0.75rem" },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Estilo para ocultar pestañas inactivas */
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light">
+
+    <header class="bg-card-light shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a class="text-2xl font-bold text-primary" href="index.html">Hotel Oasis</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-subtle-light hover:text-primary" href="index.html">Booking</a>
+                <a class="text-subtle-light hover:text-primary" href="#">Instalaciones</a>
+                <a class="text-subtle-light hover:text-primary" href="#">Sobre Nosotros</a>
+                <a class="text-subtle-light hover:text-primary" href="#">Contacto</a>
+            </div>
+            <div id="user-session" class="flex items-center">
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <aside class="lg:col-span-1">
+                <div class="bg-card-light p-6 rounded-lg shadow-lg text-center">
+                    <img alt="Foto de perfil"
+                        class="w-28 h-28 rounded-full mx-auto mb-4 border-4 border-primary object-cover"
+                        id="profile-pic" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde" />
+                    <h2 class="text-xl font-bold">BIENVENIDO,</h2>
+                    <h3 class="text-lg font-semibold text-primary mb-6" id="profile-name-sidebar">Cargando...</h3>
+                    <nav class="space-y-2 text-left" id="profile-menu-tabs">
+                        <a class="flex items-center p-3 rounded-lg bg-gray-100 text-primary font-semibold"
+                            href="#mis-reservas">
+                            <span class="material-icons mr-3">view_list</span> Mis Reservas
+                        </a>
+                        <a class="flex items-center p-3 rounded-lg hover:bg-gray-100 text-subtle-light font-semibold"
+                            href="#editar-perfil">
+                            <span class="material-icons mr-3">edit</span> Editar Perfil
+                        </a>
+                        <a class="flex items-center p-3 rounded-lg hover:bg-gray-100 text-subtle-light font-semibold"
+                            href="#metodos-pago">
+                            <span class="material-icons mr-3">payment</span> Métodos de Pago
+                        </a>
+                        <a id="logout-button"
+                            class="flex items-center p-3 rounded-lg text-red-600 hover:bg-red-100 font-semibold"
+                            href="#">
+                            <span class="material-icons mr-3">logout</span>
+                            Cerrar Sesión
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+            <div class="lg:col-span-3">
+                <div id="mis-reservas" class="tab-pane active">
+                    <div class="bg-card-light p-8 rounded-lg shadow-lg">
+                        <h1 class="text-3xl font-bold mb-8">Historial de Reservas</h1>
+                        <div id="reservations-container" class="space-y-6">
+                            <p class="text-subtle-light">Cargando tus reservas...</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="editar-perfil" class="tab-pane">
+                    <div class="bg-card-light p-8 rounded-lg shadow-lg">
+                        <h1 class="text-3xl font-bold mb-8">Editar Perfil</h1>
+                        <form id="edit-profile-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div><label class="font-semibold text-sm">Nombre(s)</label><input type="text"
+                                        id="edit-nombre"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                                </div>
+                                <div><label class="font-semibold text-sm">Apellido(s)</label><input type="text"
+                                        id="edit-apellido"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                                </div>
+                            </div>
+                            <div><label class="font-semibold text-sm">Correo Electrónico</label><input type="email"
+                                    id="edit-email"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100" disabled>
+                            </div>
+                            <h2 class="text-2xl font-bold pt-4 border-t mt-4">Cambiar Contraseña</h2>
+                            <div><label for="contrasena-actual" class="font-semibold text-sm">Contraseña
+                                    Actual</label><input type="password" id="contrasena-actual"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            </div>
+                            <div><label for="nueva-contrasena" class="font-semibold text-sm">Nueva
+                                    Contraseña</label><input type="password" id="nueva-contrasena"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
+                            </div>
+                            <button type="submit"
+                                class="bg-primary text-white font-bold py-2 px-6 rounded-full hover:bg-primary-dark transition-colors">Guardar
+                                Cambios</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="metodos-pago" class="tab-pane">
+                    <div class="bg-card-light p-8 rounded-lg shadow-lg">
+                        <h1 class="text-3xl font-bold mb-8">Métodos de Pago</h1>
+                        <p class="text-subtle-light">Esta funcionalidad estará disponible próximamente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-card-light mt-16 py-12 border-t border-gray-200">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1">
+                <h3 class="text-xl font-bold text-primary mb-4">Hotel Oasis</h3>
+                <p class="text-subtle-light text-sm">Tu refugio ideal, donde el confort se encuentra con la elegancia.
+                </p>
+                <div class="flex space-x-4 mt-4">
+                    <a class="text-subtle-light hover:text-primary" href="#">
+                        <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a class="text-subtle-light hover:text-primary" href="#">
+                        <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                            </path>
+                        </svg>
+                    </a>
+                    <a class="text-subtle-light hover:text-primary" href="#">
+                        <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path clip-rule="evenodd"
+                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 2.525c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Compañía</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a class="text-subtle-light hover:text-primary" href="#">Sobre Nosotros</a></li>
+                    <li><a class="text-subtle-light hover:text-primary" href="#">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Centro de Ayuda</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a class="text-subtle-light hover:text-primary" href="#">Preguntas Frecuentes</a></li>
+                    <li><a class="text-subtle-light hover:text-primary" href="#">Guías de Renta</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Contacto</h4>
+                <ul class="space-y-2 text-sm text-subtle-light">
+                    <li>Email: contacto@hoteloasis.com</li>
+                    <li>Teléfono: +52 555 123 4567</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="perfil.js"></script>
+</body>
+
+</html>

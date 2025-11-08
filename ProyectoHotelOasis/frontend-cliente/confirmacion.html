@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Reserva - Hotel Oasis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Hotel Oasis</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Booking</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Instalaciones</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sobre Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+                <div id="user-session" class="ms-lg-3">
+                    <a href="login-cliente.html" id="login-button" class="btn btn-primary">Login</a>
+
+                    <div class="dropdown d-none" id="profile-menu">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span id="profile-name-nav"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="perfil.html">Mi Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#" id="logout-button-nav">Cerrar Sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-5">Ya casi es tuya</h1>
+            <p class="lead text-muted">Confirma los detalles de tu estancia y completa tus datos para finalizar.</p>
+        </div>
+
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <form id="customer-form">
+                    <div class="form-step-card card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">1. Tus Datos</h4>
+                            <div class="row">
+                                <div class="col-md-6 mb-3"><label for="nombre"
+                                        class="form-label">Nombre(s)</label><input type="text" id="nombre"
+                                        class="form-control" required></div>
+                                <div class="col-md-6 mb-3"><label for="apellido"
+                                        class="form-label">Apellido(s)</label><input type="text" id="apellido"
+                                        class="form-control" required></div>
+                                <div class="mb-3"><label for="email" class="form-label">Correo Electrónico</label><input
+                                        type="email" id="email" class="form-control" required></div>
+                                <div class="mb-3"><label for="telefono" class="form-label">Teléfono</label><input
+                                        type="tel" id="telefono" class="form-control" required></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-step-card card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">2. Método de Pago</h4>
+                            <div class="my-3">
+                                <div class="form-check">
+                                    <input id="efectivo" name="paymentMethod" type="radio" class="form-check-input"
+                                        checked required>
+                                    <label class="form-check-label" for="efectivo">Pagar en efectivo en el hotel</label>
+                                </div>
+                                <div class="form-check">
+                                    <input id="tarjeta" name="paymentMethod" type="radio" class="form-check-input"
+                                        required>
+                                    <label class="form-check-label" for="tarjeta">Tarjeta de crédito/débito</label>
+                                </div>
+                            </div>
+
+                            <div id="credit-card-form" class="row g-3 d-none">
+                                <div class="col-md-6">
+                                    <label for="cc-name" class="form-label">Nombre en la tarjeta</label>
+                                    <input type="text" class="form-control" id="cc-name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cc-number" class="form-label">Número de la tarjeta</label>
+                                    <input type="text" class="form-control" id="cc-number"
+                                        placeholder="4242 4242 4242 4242">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="cc-expiration" class="form-label">Expiración</label>
+                                    <input type="text" class="form-control" id="cc-expiration" placeholder="MM/AA">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="cc-cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cc-cvv" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="summary-card-sticky card border-0 shadow-sm">
+                    <img id="summary-room-photo" src="https://via.placeholder.com/400x250" class="card-img-top"
+                        alt="Foto de la habitación">
+                    <div class="card-body p-4">
+                        <h4 id="summary-room-name">Nombre de la Habitación</h4>
+                        <hr>
+                        <div id="summary-details">
+                            <p>Cargando detalles...</p>
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" form="customer-form" class="btn btn-primary btn-lg"
+                                id="confirm-button">Confirmar y Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-section bg-light pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-logo">Hotel Oasis</h5>
+                    <p class="text-muted">Tu refugio ideal, donde el confort se encuentra con la elegancia.</p>
+                    <div class="social-icons mt-3"><a href="#" class="social-icon"><i class="bi bi-facebook"></i></a><a
+                            href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a><a href="#"
+                            class="social-icon"><i class="bi bi-instagram"></i></a></div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h6>Compañía</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h6>Centro de Ayuda</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Guías de Renta</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <h6>Contacto</h6>
+                    <p class="text-muted mb-1">Email: contacto@hoteloasis.com</p>
+                    <p class="text-muted">Teléfono: +52 555 123 4567</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="confirmacion.js"></script>
+
+    <body class="bg-page">
+
+    </body>
+    <script src="auth.js"></script>
+</body>
+
+</html>

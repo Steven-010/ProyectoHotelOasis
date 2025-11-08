@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Panel de Administración - Hotel Oasis</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#20c997", "background-light": "#f8fbfa", "background-dark": "#111827", "foreground-light": "#1f2937",
+                        "foreground-dark": "#f9fafb", "card-light": "#ffffff", "card-dark": "#1f2937", "border-light": "#e5e7eb",
+                        "border-dark": "#374151", "muted-light": "#6b7280", "muted-dark": "#9ca3af", "accent-light": "#eefdfa",
+                        "accent-dark": "#1e3933", "success": "#20c997", "danger": "#dc3545", "warning": "#ffc107", "info": "#0dcaf0", "gray": "#6c757d"
+                    },
+                    fontFamily: { "display": ["Work Sans", "sans-serif"] },
+                },
+            },
+        };
+    </script>
+    <style>
+        .font-display {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .nav-link.active {
+            background-color: #eefdfa;
+            color: #20c997;
+            font-weight: 600;
+        }
+
+        .dark .nav-link.active {
+            background-color: #1e3933;
+        }
+    </style>
+
+    <style>
+        .period-btn.active {
+            background-color: #20c997;
+            /* Este es tu color 'primary' */
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="flex min-h-screen">
+        <aside id="sidebarMenu"
+            class="fixed top-0 left-0 h-full w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark flex flex-col">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-foreground-light dark:text-foreground-dark">Hotel Oasis</h1>
+            </div>
+            <nav class="flex-grow px-4 space-y-2">
+                <a href="#dashboard-content"
+                    class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-muted-light dark:text-muted-dark"><span>📊</span><span>Dashboard</span></a>
+                <a href="#reservas-content"
+                    class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-muted-light dark:text-muted-dark"><span>🗓️</span><span>Reservas</span></a>
+                <a href="#habitaciones-content"
+                    class="nav-link flex items-center gap-3 px-4 py-2 rounded-lg text-muted-light dark:text-muted-dark"><span>🛏️</span><span>Habitaciones</span></a>
+                <a href="#reportes-content"
+                    class="nav-link admin-only hidden flex items-center gap-3 px-4 py-2 rounded-lg text-muted-light dark:text-muted-dark"><span>📄</span><span>Reportes</span></a>
+                <a href="#personal-content"
+                    class="nav-link admin-only hidden flex items-center gap-3 px-4 py-2 rounded-lg text-muted-light dark:text-muted-dark"><span>👥</span><span>Gestionar
+                        Personal</span></a>
+            </nav>
+            <div class="p-4"><button id="logout-button"
+                    class="w-full text-red-500 font-semibold py-2 rounded-lg hover:bg-red-500/10">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="ml-64 flex-1 p-8">
+            <div id="dashboard-content" class="tab-pane">
+                <h2 class="text-3xl font-bold text-foreground-light dark:text-foreground-dark mb-8">Dashboard</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div
+                        class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <p class="text-muted-light dark:text-muted-dark text-sm">Reservas Totales</p>
+                        <p id="total-reservas"
+                            class="text-3xl font-bold text-foreground-light dark:text-foreground-dark mt-2">Cargando...
+                        </p>
+                    </div>
+                    <div
+                        class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <p class="text-muted-light dark:text-muted-dark text-sm">Tasa de Ocupación</p>
+                        <p id="tasa-ocupacion"
+                            class="text-3xl font-bold text-foreground-light dark:text-foreground-dark mt-2">Cargando...
+                        </p>
+                    </div>
+                    <div
+                        class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <p class="text-muted-light dark:text-muted-dark text-sm">Habitaciones Disponibles</p>
+                        <p id="habitaciones-disponibles"
+                            class="text-3xl font-bold text-foreground-light dark:text-foreground-dark mt-2">Cargando...
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div
+                        class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <h3 class="text-lg font-semibold mb-4">Reservas por Mes</h3>
+                        <div class="relative h-48">
+                            <canvas id="reservationsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-foreground-light dark:text-foreground-dark mb-4">Actividad
+                        Reciente</h3>
+                    <div
+                        class="overflow-x-auto bg-card-light dark:bg-card-dark rounded-lg border border-border-light dark:border-border-dark">
+                        <table class="w-full text-sm text-left text-muted-light dark:text-muted-dark">
+                            <thead
+                                class="text-xs text-foreground-light dark:text-foreground-dark uppercase bg-background-light dark:bg-background-dark">
+                                <tr>
+                                    <th class="px-6 py-3">Huésped</th>
+                                    <th class="px-6 py-3">Habitación</th>
+                                    <th class="px-6 py-3">Check-in</th>
+                                    <th class="px-6 py-3">Check-out</th>
+                                    <th class="px-6 py-3">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="actividad-reciente-body">
+                                <tr>
+                                    <td colspan="5" class="text-center p-6">Cargando actividad...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reservas-content" class="tab-pane">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-foreground-light dark:text-foreground-dark">Gestión de Reservas
+                    </h2>
+                    <button
+                        class="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary/90">
+                        <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z">
+                            </path>
+                        </svg>
+                        <span>Nueva Reserva</span>
+                    </button>
+                </div>
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl border border-border-light dark:border-border-dark">
+                    <div class="flex flex-col md:flex-row gap-4 mb-6">
+                        <div class="relative flex-1">
+                            <input id="search-reservas"
+                                class="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary"
+                                placeholder="Buscar por huésped, habitación o estado..." type="text" />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-muted-light" fill="currentColor" viewBox="0 0 256 256"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-muted-light dark:text-muted-dark">
+                            <thead
+                                class="text-xs text-foreground-light dark:text-foreground-dark uppercase bg-background-light dark:bg-background-dark">
+                                <tr>
+                                    <th class="px-6 py-3">ID Reserva</th>
+                                    <th class="px-6 py-3">Huésped</th>
+                                    <th class="px-6 py-3">Check-in</th>
+                                    <th class="px-6 py-3">Check-out</th>
+                                    <th class="px-6 py-3">Habitación</th>
+                                    <th class="px-6 py-3">Estado</th>
+                                    <th class="px-6 py-3"><span class="sr-only">Acciones</span></th>
+                                </tr>
+                            </thead>
+                            <tbody id="reservas-table-body">
+                                <tr>
+                                    <td colspan="7" class="text-center p-6">Cargando reservas...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="habitaciones-content" class="tab-pane">
+                <header class="mb-8">
+                    <h2 class="text-4xl font-bold text-foreground-light dark:text-foreground-dark">Estado de las
+                        Habitaciones</h2>
+                    <p class="text-foreground-light/70 dark:text-foreground-dark/70 mt-1">Panel visual del estado actual
+                        de las habitaciones.</p>
+                </header>
+                <div id="habitaciones-grid-container"
+                    class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
+                    <p>Cargando estado de las habitaciones...</p>
+                </div>
+            </div>
+
+            <div id="reportes-content" class="tab-pane admin-only hidden">
+                <h1 class="text-3xl font-bold mb-8">Reportes del Hotel</h1>
+
+                <div class="bg-card-light dark:bg-card-dark p-4 rounded-lg border mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 items-end">
+                        <div>
+                            <p class="text-sm font-medium mb-2">Reportes Rápidos</p>
+                            <div id="periodo-selector"
+                                class="flex w-full sm:w-auto bg-accent-light dark:bg-accent-dark p-1 rounded-lg">
+                                <button data-periodo="semanal"
+                                    class="period-btn flex-1 text-center py-2 px-4 rounded-md text-sm font-medium">Semanal</button>
+                                <button data-periodo="quincenal"
+                                    class="period-btn flex-1 text-center py-2 px-4 rounded-md text-sm font-medium">Quincenal</button>
+                                <button data-periodo="mensual"
+                                    class="period-btn flex-1 text-center py-2 px-4 rounded-md text-sm font-medium">Mensual</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium mb-2">Rango Personalizado</p>
+                            <div class="flex items-center">
+                                <input type="text" id="report-date-range" placeholder="Elige un rango de fechas"
+                                    class="w-full rounded-lg border border-border-light text-center py-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-12">
+                    <section>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold">Reporte Financiero</h2>
+                            <button id="download-financial-pdf"
+                                class="px-4 py-2 bg-primary text-white text-sm font-semibold rounded hover:bg-primary/90">Descargar
+                                PDF</button>
+                        </div>
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                            <div class="xl:col-span-1 bg-card-light dark:bg-card-dark p-6 rounded-lg border">
+                                <p class="text-base font-medium">Ingresos Totales</p>
+                                <p id="reporte-ingresos" class="text-4xl font-bold mt-2">$0.00</p>
+                                <div class="mt-6 h-56">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="xl:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-lg border">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-xs uppercase">
+                                        <tr>
+                                            <th class="py-3 px-6">Día</th>
+                                            <th class="py-3 px-6 text-right">Ingresos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="financial-report-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold">Reporte de Ocupación</h2>
+                            <button id="download-occupancy-pdf"
+                                class="px-4 py-2 bg-primary text-white text-sm font-semibold rounded hover:bg-primary/90">Descargar
+                                PDF</button>
+                        </div>
+                        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                            <div class="xl:col-span-1 bg-card-light dark:bg-card-dark p-6 rounded-lg border">
+                                <p class="text-base font-medium">Ocupación Promedio</p>
+                                <p id="reporte-ocupacion" class="text-4xl font-bold mt-2">0%</p>
+                                <div class="mt-6 h-56">
+                                    <canvas id="occupancyChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="xl:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-lg border">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-xs uppercase">
+                                        <tr>
+                                            <th class="py-3 px-6">Día</th>
+                                            <th class="py-3 px-6 text-right">Tasa de Ocupación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="occupancy-report-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="personal-content" class="tab-pane admin-only hidden">
+                <header class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-bold">Gestión de Personal</h2>
+                    <button id="abrir-modal-personal"
+                        class="flex items-center gap-2 rounded-lg bg-primary text-white px-4 py-2 font-semibold shadow-md hover:bg-primary/90">
+                        <span>+</span>
+                        <span>Dar de Alta Personal</span>
+                    </button>
+                </header>
+                <div class="bg-card-light dark:bg-card-dark rounded-lg shadow-sm overflow-hidden border">
+                    <table class="w-full text-left">
+                        <thead class="border-b">
+                            <tr>
+                                <th class="p-4 text-sm font-semibold uppercase">Nombre</th>
+                                <th class="p-4 text-sm font-semibold uppercase">Correo</th>
+                                <th class="p-4 text-sm font-semibold uppercase">Puesto</th>
+                                <th class="p-4 text-sm font-semibold uppercase text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="personal-table-body" class="divide-y">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <div id="nueva-reserva-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-2xl transform transition-all">
+            <div
+                class="px-6 py-4 border-b border-border-light dark:border-border-dark flex justify-between items-center">
+                <h3 class="text-xl font-bold text-foreground-light dark:text-foreground-dark">Crear Nueva Reserva</h3>
+                <button id="close-modal-button"
+                    class="text-muted-light dark:text-muted-dark hover:text-primary">&times;</button>
+            </div>
+
+            <div class="p-6">
+                <div id="modal-step-1">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="modal-fecha-inicio" class="block text-sm font-medium mb-1">Check-in</label>
+                            <input type="date" id="modal-fecha-inicio"
+                                class="w-full rounded-lg border border-border-light">
+                        </div>
+                        <div>
+                            <label for="modal-fecha-fin" class="block text-sm font-medium mb-1">Check-out</label>
+                            <input type="date" id="modal-fecha-fin"
+                                class="w-full rounded-lg border border-border-light">
+                        </div>
+                        <div>
+                            <label for="modal-huespedes" class="block text-sm font-medium mb-1">Huéspedes</label>
+                            <input type="number" id="modal-huespedes" value="2" min="1"
+                                class="w-full rounded-lg border border-border-light">
+                        </div>
+                    </div>
+                    <div class="text-right mt-6">
+                        <button id="to-step-2-button"
+                            class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Buscar
+                            Habitaciones</button>
+                    </div>
+                </div>
+
+                <div id="modal-step-2" class="hidden">
+                    <p class="text-muted-light mb-2">Selecciona una habitación disponible:</p>
+                    <div id="available-rooms-container" class="max-h-64 overflow-y-auto space-y-2">
+                    </div>
+                    <div class="text-right mt-6">
+                        <button id="back-to-step-1-button" class="text-muted-light px-5 py-2 rounded-lg">Atrás</button>
+                        <button id="to-step-3-button" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold"
+                            disabled>Siguiente</button>
+                    </div>
+                </div>
+
+                <div id="modal-step-3" class="hidden">
+                    <input type="text" id="modal-cliente-nombre" placeholder="Nombre del Cliente"
+                        class="w-full rounded-lg border mb-3">
+                    <input type="text" id="modal-cliente-apellido" placeholder="Apellido del Cliente"
+                        class="w-full rounded-lg border mb-3">
+                    <input type="email" id="modal-cliente-email" placeholder="Email del Cliente"
+                        class="w-full rounded-lg border mb-3">
+                    <div class="text-right mt-6">
+                        <button id="back-to-step-2-button" class="text-muted-light px-5 py-2 rounded-lg">Atrás</button>
+                        <button id="confirm-reservation-button"
+                            class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Confirmar Reserva</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detalles-reserva-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-lg">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-xl font-bold">Detalles de la Reserva</h3>
+                <button id="close-detalles-modal-button" class="text-muted-light hover:text-primary">&times;</button>
+            </div>
+            <div id="detalles-modal-body" class="p-6">
+                <p>Cargando detalles...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="cambiar-estado-modal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-md">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 id="modal-estado-titulo" class="text-xl font-bold">Cambiar Estado de Habitación</h3>
+                <button id="close-estado-modal-button" class="text-muted-light hover:text-primary">&times;</button>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="select-estado-general" class="block font-medium mb-1">Estado General:</label>
+                        <select id="select-estado-general"
+                            class="w-full rounded-lg border border-border-light focus:ring-primary focus:border-primary">
+                            <option value="Disponible">Disponible</option>
+                            <option value="Ocupada">Ocupada</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="select-estado-limpieza" class="block font-medium mb-1">Estado de Limpieza:</label>
+                        <select id="select-estado-limpieza"
+                            class="w-full rounded-lg border border-border-light focus:ring-primary focus:border-primary">
+                            <option value="Limpia">Limpia</option>
+                            <option value="Sucia">Sucia</option>
+                            <option value="En Proceso">En Proceso</option>
+                        </select>
+                    </div>
+                    <div class="text-right pt-4">
+                        <button id="guardar-nuevo-estado-btn"
+                            class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-alta-personal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-lg">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-xl font-bold">Dar de Alta Nuevo Empleado</h3>
+                <button id="cerrar-modal-personal" class="text-muted-light hover:text-primary">&times;</button>
+            </div>
+            <form id="form-alta-personal" class="p-6 space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="personal-nombre" placeholder="Nombre" class="w-full rounded-lg border"
+                        required>
+                    <input type="text" id="personal-apellido" placeholder="Apellido" class="w-full rounded-lg border"
+                        required>
+                </div>
+                <input type="email" id="personal-correo" placeholder="Correo Electrónico"
+                    class="w-full rounded-lg border" required>
+                <select id="personal-puesto" class="w-full rounded-lg border" required>
+                    <option value="" disabled selected>Selecciona un Puesto</option>
+                    <option value="Recepcionista">Recepcionista</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                <input type="password" id="personal-contrasena" placeholder="Contraseña Temporal"
+                    class="w-full rounded-lg border" required>
+                <div class="text-right pt-4">
+                    <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Registrar
+                        Empleado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-editar-personal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-lg">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-xl font-bold">Editar Datos del Empleado</h3>
+                <button id="cerrar-modal-editar" class="text-muted-light hover:text-primary">&times;</button>
+            </div>
+            <form id="form-editar-personal" class="p-6 space-y-4">
+                <input type="hidden" id="edit-personal-id">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="edit-personal-nombre" placeholder="Nombre" class="w-full rounded-lg border"
+                        required>
+                    <input type="text" id="edit-personal-apellido" placeholder="Apellido"
+                        class="w-full rounded-lg border" required>
+                </div>
+                <input type="email" id="edit-personal-correo" placeholder="Correo Electrónico"
+                    class="w-full rounded-lg border" required>
+                <select id="edit-personal-puesto" class="w-full rounded-lg border" required>
+                    <option value="" disabled>Selecciona un Puesto</option>
+                    <option value="Recepcionista">Recepcionista</option>
+                    <option value="Limpieza">Limpieza</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                <div class="text-right pt-4">
+                    <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Guardar
+                        Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-baja-personal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-md p-6">
+            <h3 class="text-xl font-bold text-center">Confirmar Acción</h3>
+            <p class="text-center my-4">¿Estás seguro de que quieres dar de baja a este empleado?</p>
+            <div class="flex justify-center gap-4 mt-6">
+                <button id="cancelar-baja-btn" class="px-6 py-2 rounded-lg">Cancelar</button>
+                <button id="confirmar-baja-btn"
+                    class="bg-danger text-white px-6 py-2 rounded-lg font-semibold">Confirmar Baja</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-reset-password"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-2xl w-full max-w-md">
+            <div class="px-6 py-4 border-b flex justify-between items-center">
+                <h3 class="text-xl font-bold">Asignar Nueva Contraseña</h3>
+                <button id="cerrar-modal-reset-password" class="text-muted-light hover:text-primary">&times;</button>
+            </div>
+            <form id="form-reset-password" class="p-6 space-y-4">
+                <input type="hidden" id="reset-password-id">
+                <div>
+                    <label for="new-password" class="block text-sm font-medium mb-1">Nueva Contraseña Temporal</label>
+                    <input type="password" id="new-password" class="w-full rounded-lg border" required>
+                </div>
+                <div class="text-right pt-4">
+                    <button type="submit" class="bg-primary text-white px-5 py-2 rounded-lg font-semibold">Guardar
+                        Contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

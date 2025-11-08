@@ -1,0 +1,828 @@
+:root {
+    --font-primary: 'Poppins', sans-serif;
+    --font-headings: 'Playfair Display', serif;
+    --color-primary: #20c997;
+    /* Un verde fresco y moderno */
+    --color-dark: #343A40;
+    --color-light: #f8f9fa;
+    --border-radius: 12px;
+}
+
+body {
+    font-family: var(--font-primary);
+    color: var(--color-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand,
+.footer-logo {
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+html,
+body {
+    height: 100%;
+    /* Permite que los hijos usen altura porcentual */
+    margin: 0;
+    /* Quita márgenes por defecto */
+    padding: 0;
+    /* Quita paddings por defecto */
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    padding: 10px 25px;
+    border-radius: 50px;
+    /* Botones redondeados */
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1aa07e;
+    border-color: #1aa07e;
+    transform: translateY(-2px);
+}
+
+
+/* ======== SECCIONES DE CONTENIDO ======== */
+.popular-rooms,
+.facilities {
+    padding-top: 8rem;
+    /* Compensa el espacio del buscador */
+}
+
+.facility-card {
+    background-color: white;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.facility-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+.facility-card i {
+    font-size: 2rem;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* ======== FOOTER ======== */
+.footer-section {
+    border-top: 1px solid #dee2e6;
+}
+
+.footer-section h6 {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-section a {
+    text-decoration: none;
+    color: #6c757d;
+    transition: color 0.2s;
+}
+
+.footer-section a:hover {
+    color: var(--color-primary);
+}
+
+/* ======== ESTILOS PARA EL CARRUSEL DE HABITACIONES ======== */
+
+.popular-rooms {
+    /* Este overflow es para que las tarjetas no se corten si tienen sombras */
+    overflow: hidden;
+}
+
+.room-card {
+    display: flex;
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.room-card .img-container {
+    width: 40%;
+}
+
+.room-card .img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-card .content {
+    padding: 1.5rem;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.room-card .content h5 {
+    font-family: var(--font-headings);
+    font-size: 1.25rem;
+}
+
+.room-card .content .capacity {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.room-card .content .price {
+    font-size: 1.75rem;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--color-primary);
+    /* Verde! */
+    margin-top: auto;
+    /* Empuja el precio y botón al final */
+    margin-bottom: 1rem;
+}
+
+.room-card .content .btn-details {
+    background-color: #343A40;
+    color: white;
+    border-radius: 50px;
+    padding: 8px 20px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+.room-card .content .btn-details:hover {
+    background-color: var(--color-primary);
+}
+
+
+/* Estilos para la navegación del carrusel */
+.slider-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    position: static;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-light);
+    border-radius: 50%;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+/* ======== ESTILOS PARA ICONOS SOCIALES EN FOOTER ======== */
+.social-icons .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: var(--color-dark);
+    text-decoration: none;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons .social-icon:hover {
+    background-color: var(--color-primary);
+    color: white;
+    transform: translateY(-3px);
+}
+
+
+
+/* ======== ESTILOS PARA SECCIÓN SOBRE NOSOTROS ======== */
+.about-section .about-image-container {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.about-section .about-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ======== ESTILOS MEJORADOS PARA LA NAVEGACIÓN ======== */
+
+.navbar-nav .nav-link {
+    font-weight: 600;
+    color: var(--color-dark);
+    position: relative;
+    /* Necesario para la línea inferior */
+    padding-bottom: 8px;
+    /* Espacio para la línea */
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+/* --- Efecto al pasar el mouse por encima (Hover) --- */
+.navbar-nav .nav-link:hover {
+    color: var(--color-primary);
+    /* Cambia al color verde principal */
+}
+
+/* --- Estilo para el botón de la página activa (Active) --- */
+.navbar-nav .nav-link.active {
+    color: var(--color-primary);
+    /* Se mantiene en color verde */
+}
+
+/* Línea decorativa para el estado activo y hover */
+.navbar-nav .nav-link.active::after,
+.navbar-nav .nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background-color: var(--color-primary);
+    border-radius: 2px;
+}
+
+/* ======== ESTILOS PARA EL CARRUSEL DEL HERO ======== */
+#heroCarousel {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    /* Oculta las esquinas de las imágenes para que se vea redondeado */
+    /*height: 400px;*/
+}
+
+.carousel-inner,
+.carousel-item,
+#heroCarousel img {
+    height: 100%;
+    object-fit: cover;
+    /* Asegura que la imagen cubra todo el espacio sin deformarse */
+}
+
+/* ======== AJUSTE DE VELOCIDAD PARA EL CARRUSEL ======== */
+.carousel-item {
+    /* El valor por defecto es 0.6s, lo reducimos a 0.4s para que sea más rápido */
+    transition: transform 0.4s ease-in-out;
+}
+
+
+/* ======== ESTILOS PARA BOTÓN DESHABILITADO ======== */
+.btn:disabled {
+    background-color: #a3e9d8;
+    /* Un verde más pálido */
+    border-color: #a3e9d8;
+    cursor: not-allowed;
+    transform: none;
+    /* Quitamos el efecto hover */
+}
+
+.btn:disabled:hover {
+    /* Nos aseguramos que no cambie de color en hover */
+    background-color: #a3e9d8;
+    border-color: #a3e9d8;
+}
+
+
+/* ======== ESTILOS PARA ICONOS DE SERVICIOS EN TARJETAS (ACTUALIZADO) ======== */
+.service-icons {
+    display: flex;
+    /* Los pone en horizontal */
+    flex-wrap: wrap;
+    /* Si no caben, bajan */
+    gap: 1.25rem;
+    /* Espacio entre iconos */
+    margin-top: 1rem;
+    /* Espacio después de la descripción */
+    margin-bottom: 1.25rem;
+    /* Espacio antes del precio */
+    padding-bottom: 1.25rem;
+    /* Espacio extra */
+    border-bottom: 1px solid #eee;
+    /* Línea divisoria como en el ejemplo */
+}
+
+.service-icon i {
+    font-size: 1.3rem;
+    /* Tamaño del icono */
+    color: #6c757d;
+    /* Color gris oscuro para los iconos */
+    transition: color 0.3s ease;
+}
+
+.service-icon i:hover {
+    color: var(--color-primary);
+    /* Se ponen verdes al pasar el mouse */
+}
+
+
+
+/* ======== ESTILOS PARA PÁGINA DE DETALLES DE HABITACIÓN ======== */
+
+.photo-gallery .main-photo {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 500px;
+}
+
+.photo-gallery .main-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.booking-widget {
+    background-color: white;
+    border: 1px solid #eee;
+}
+
+.booking-widget .form-control {
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+
+/* ======== ESTILOS PARA LA PÁGINA DE PERFIL ======== */
+
+.profile-sidebar .list-group-item {
+    border-left: 3px solid transparent;
+    border-radius: 0;
+}
+
+.profile-sidebar .list-group-item.active {
+    border-left-color: var(--color-primary);
+    background-color: #e0f2f1;
+    /* Verde muy claro */
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.profile-sidebar .list-group-item:hover {
+    background-color: #f1f1f1;
+}
+
+.profile-sidebar #profile-pic {
+    object-fit: cover;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-card-profile {
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.reservation-card-profile:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    transform: translateY(-3px);
+}
+
+
+/* ======== ESTILOS MODERNOS PARA PÁGINA DE CONFIRMACIÓN ======== */
+.summary-card-sticky {
+    position: sticky;
+    top: 2rem;
+    /* Se pega a 2rem del borde superior */
+}
+
+.summary-details-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.summary-details-item span {
+    color: #6c757d;
+}
+
+.summary-details-item strong {
+    color: var(--color-dark);
+}
+
+.form-step-card .form-control {
+    background-color: #f8f9fa;
+    border: 1px solid #eee;
+}
+
+/* ======== ESTILOS PARA DAR VIDA A PÁGINAS INTERNAS ======== */
+
+/* Aplicamos un fondo suave a todas las páginas que no son el index */
+body.bg-page {
+    background-color: #f4f7f9;
+    /* Un gris azulado muy suave y moderno */
+}
+
+/* Hacemos que las tarjetas de formulario resalten sobre el nuevo fondo */
+.form-step-card {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+}
+
+/* Hacemos que el resumen de reserva resalte también */
+.summary-card-sticky {
+    background-color: #ffffff;
+    border-radius: var(--border-radius);
+}
+
+/* ======== ESTILOS PARA EL NUEVO MODAL DE AUTENTICACIÓN CENTRADO ======== */
+
+.auth-modal-dialog {
+    max-width: 450px;
+    /* Hacemos la ventana un poco más compacta */
+}
+
+.modal-content {
+    border-radius: 15px !important;
+    /* Aseguramos bordes redondeados */
+    border: none !important;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.5rem 1.5rem 0.5rem;
+    position: relative;
+    text-align: center;
+    /* Centramos el título */
+}
+
+.modal-header .btn-close {
+    position: absolute;
+    /* Movemos el botón de cerrar a la esquina */
+    top: 1rem;
+    right: 1rem;
+}
+
+.modal-header .modal-title {
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: 1.5rem;
+    /* Reducimos el tamaño del título para mejor proporción */
+    width: 100%;
+    /* Hacemos que ocupe todo el ancho para centrarlo bien */
+}
+
+.modal-body {
+    padding: 1rem 2rem 2rem;
+    /* Ajustamos el padding */
+    text-align: center;
+    /* Centramos todo el contenido */
+}
+
+.modal-body .btn-lg {
+    padding: 0.75rem 1.25rem;
+    /* Hacemos los botones un poco más grandes y cómodos */
+    font-weight: 600;
+}
+
+.modal-body .social-login-divider {
+    margin: 1.5rem 0;
+    /* Más espacio para el divisor */
+}
+
+
+.room-card-v2 {
+    position: relative;
+    /* Necesario para el overlay */
+    height: 350px;
+    /* Altura fija para las tarjetas */
+    background-size: cover;
+    /* Asegura que la imagen cubra todo */
+    background-position: center;
+    /* Centra la imagen */
+    border-radius: var(--border-radius);
+    /* Mantenemos bordes redondeados */
+    overflow: hidden;
+    /* Oculta partes del overlay que se salgan */
+    display: flex;
+    /* Para alinear el contenido */
+    align-items: flex-end;
+    /* Alinea el contenido abajo */
+    transition: transform 0.3s ease;
+    /* Efecto suave al pasar el mouse */
+}
+
+.room-card-v2:hover {
+    transform: scale(1.03);
+    /* Efecto de zoom ligero al pasar el mouse */
+}
+
+.room-card-v2-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    /* Altura del degradado o fondo oscuro */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    /* Degradado oscuro desde abajo */
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    /* Redondea solo abajo */
+    display: flex;
+    align-items: flex-end;
+    /* Alinea el contenido del overlay abajo */
+}
+
+.room-card-v2-content {
+    padding: 1.5rem;
+    color: white;
+    /* Texto blanco para contraste */
+    width: 100%;
+}
+
+.room-card-v2-title {
+    font-family: var(--font-headings);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.room-card-v2-price {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    /* Precio en color verde */
+    margin-bottom: 1rem;
+}
+
+.room-card-v2-button {
+    display: inline-block;
+    /* Para que funcione el padding */
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.room-card-v2-button:hover {
+    background-color: white;
+    color: var(--color-primary);
+}
+
+/* Ajuste para el Swiper si es necesario */
+.room-swiper {
+    padding-bottom: 10px;
+    /* Espacio extra por si las tarjetas crecen un poco con el hover */
+}
+
+
+.hero-section-v2 {
+    position: relative; 
+    height: calc(100vh - 70px); /* <<--- MODIFICA ESTA LÍNEA (Usa la altura real de tu Navbar) */
+    min-height: 600px; /* Puedes ajustar o quitar min-height si interfiere */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden;
+}
+
+.hero-carousel-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-carousel-background .carousel-inner,
+.hero-carousel-background .carousel-item,
+.hero-carousel-background img {
+    width: 100%;
+    height: 100%;
+    /* Asegura que la imagen llene el slide */
+    object-fit: cover;
+    /* Cubre manteniendo proporción, corta si es necesario */
+    object-position: center;
+}
+
+/* Capa oscura semitransparente sobre el carrusel para legibilidad */
+.hero-carousel-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Ajusta la opacidad (0.5 = 50%) */
+    z-index: 3;
+}
+
+.hero-overlay-content {
+    position: relative;
+    z-index: 3;
+    color: white;
+    max-width: 900px;
+    padding-top: 0; /* <<--- ASEGÚRATE DE QUE NO TENGA PADDING SUPERIOR */
+    margin-top: 0;
+}
+
+/* Estilos para el buscador cuando está sobre la imagen */
+.search-form-overlay {
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Fondo blanco semitransparente */
+    padding: 1.5rem;
+    /* Menos padding que antes */
+    border-radius: var(--border-radius);
+    /* Ya no necesita position: absolute */
+    width: 100%;
+    /* Ocupa el ancho del contenedor */
+}
+
+.search-form-overlay label {
+    color: var(--color-dark);
+    /* Texto oscuro para el label */
+    font-weight: 600;
+}
+
+.search-form-overlay .form-control {
+    background-color: white;
+    /* Fondo blanco sólido para inputs */
+    border: 1px solid #ced4da;
+    /* Borde estándar */
+    border-radius: 8px;
+    /* Bordes redondeados para inputs */
+    padding-left: 1rem;
+    /* Padding estándar */
+}
+
+.search-form-overlay .form-control:focus {
+    border-color: var(--color-primary);
+    /* Borde verde al enfocar */
+    box-shadow: 0 0 0 0.25rem rgba(32, 201, 151, 0.25);
+    /* Sombra verde */
+}
+
+/* Ajustes para que las secciones siguientes no se solapen */
+main.container {
+    margin-top: 4rem;
+    /* Añade margen superior al contenido principal */
+}
+
+/* Quitamos estilos del buscador anterior que ya no aplican */
+.search-form-container {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
+    bottom: auto;
+    left: auto;
+    box-shadow: none;
+    /* Quitamos la sombra si ya no está "flotando" */
+}
+
+
+/* Hacemos que el contenedor del botón sea flexible */
+.search-form-overlay .d-grid {
+    display: flex !important;
+    /* Sobreescribimos d-grid */
+    align-items: flex-end;
+    /* Alinea el botón abajo, al nivel de los inputs */
+}
+
+/* Ajustamos el botón en sí */
+.search-form-overlay #search-button {
+    width: auto !important;
+    min-width: 145px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    flex-grow: 1;
+    white-space: nowrap;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.search-form-overlay #search-button i {
+    font-size: 1.1em;
+    vertical-align: unset;
+}
+
+/* ================================================= */
+/* ==== ESTILOS PÁGINA DE RESULTADOS (NUEVO) ==== */
+/* ================================================= */
+
+/* 1. Convertimos el contenedor en una cuadrícula (grid) de 2 columnas */
+#results-container {
+    display: grid;
+    /* Dos columnas de igual tamaño (1fr 1fr) */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; /* Espacio entre las tarjetas, como en el ejemplo */
+}
+
+/* 2. Hacemos que sea una sola columna en pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    #results-container {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+}
+
+
+.bg-page .room-card {
+    display: flex;
+    flex-direction: column; /* <-- La clave: cambia de horizontal a vertical */
+    height: 100%; 
+}
+
+.bg-page .room-card:hover {
+    /* Mantenemos el efecto hover que ya tenías */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.bg-page .room-card .img-container {
+    width: 100%; /* <-- Ocupa todo el ancho de la tarjeta */
+    height: 250px; /* <-- Le damos una altura fija a la imagen */
+}
+
+.bg-page .room-card .img-container img {
+    height: 100%; /* La imagen llena su contenedor */
+    width: 100%;
+    object-fit: cover;
+}
+
+.bg-page .room-card .content {
+    width: 100%; /* <-- Ocupa todo el ancho */
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Hace que el contenido crezca para llenar el espacio */
+}
+
+/* Ajuste para que el precio y el botón se queden abajo */
+.bg-page .room-card .content .price {
+    margin-top: 1rem; /* Añade un espacio arriba del precio */
+    margin-bottom: 1rem;
+}
+
+/* Ajuste para el botón 'Ver Detalles' */
+.bg-page .room-card .content .btn-details {
+    width: 100%; /* Hacemos que ocupe todo el ancho */
+    text-align: center;
+}
+
+.photo-gallery .main-photo {
+    height: 450px; /* Le damos una altura fija a la foto principal */
+}
+
+.photo-gallery-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espacio entre las fotos pequeñas */
+}
+.thumbnail-image {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    opacity: 0.7;
+}
+.thumbnail-image:hover,
+.thumbnail-image.active {
+    border-color: var(--color-primary);
+    opacity: 1;
+}
